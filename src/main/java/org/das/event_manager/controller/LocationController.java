@@ -1,7 +1,7 @@
 package org.das.event_manager.controller;
 
 import jakarta.validation.Valid;
-import org.das.event_manager.mappers.LocationDtoMapper;
+import org.das.event_manager.dto.mappers.LocationDtoMapper;
 import org.das.event_manager.domain.Location;
 import org.das.event_manager.dto.LocationDto;
 import org.das.event_manager.service.LocationService;
@@ -40,10 +40,9 @@ public class LocationController {
         @RequestBody @Valid LocationDto locationDtoToCreate
     ) {
         LOGGER.info("Post request for create locationDto = {}", locationDtoToCreate);
-        Location locationToUpdate = dtoMapper.toDomain(locationDtoToCreate);
         return ResponseEntity.
                 status(HttpStatus.CREATED)
-               .body(dtoMapper.toDto(locationService.create(locationToUpdate)));
+               .body(dtoMapper.toDto(locationService.create(dtoMapper.toDomain(locationDtoToCreate))));
     }
 
     @DeleteMapping("/{locationId}")
@@ -69,7 +68,7 @@ public class LocationController {
 
     @PutMapping("/{locationId}")
     public ResponseEntity<LocationDto> updateById(
-            @PathVariable Long locationId,
+            @PathVariable("locationId") Long locationId,
             @RequestBody @Valid LocationDto locationDtoToUpdate
     ) {
         LOGGER.info("Put request for update locationDto = {} with id = {}", locationDtoToUpdate, locationId);

@@ -1,9 +1,9 @@
-package org.das.event_manager.mappers;
+package org.das.event_manager.dto.mappers;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.das.event_manager.domain.Location;
-import org.das.event_manager.entity.LocationEntity;
+import org.das.event_manager.domain.entity.LocationEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ public class LocationEntityMapper {
 
 
     public LocationEntity toEntity(@NotNull Location location) {
-        LOGGER.info("Execute method toEntity in LocationEntityConverter class, got argument location = {} ",
+        LOGGER.info("Execute method toEntity in LocationEntityMapper class, location = {} ",
                 location);
         return new LocationEntity(
                 location.id(),
@@ -30,7 +30,7 @@ public class LocationEntityMapper {
     }
 
     public Location toDomain(@NotNull LocationEntity locationEntity) {
-        LOGGER.info("Execute method toDomain in LocationEntityConverter class, got argument locationEntity = {} ",
+        LOGGER.info("Execute method toDomain in LocationEntityMapper class, locationEntity = {} ",
                 locationEntity);
         return new Location(
                 locationEntity.getId(),
@@ -42,7 +42,7 @@ public class LocationEntityMapper {
     }
 
     public List<Location> toDomain(@NotNull @NotEmpty List<LocationEntity> locationEntities) {
-        LOGGER.info("Execute method toDto in LocationDtoConverter class, got argument locationEntities = {} ",
+        LOGGER.info("Execute method toDto in LocationEntityMapper class, locationEntities = {} ",
                 locationEntities);
         return locationEntities.stream()
                 .map(this::toDomain)
